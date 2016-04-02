@@ -1,0 +1,5 @@
+config.php
+system/storage/
+system/vendor/
+uploads/
+.idea/

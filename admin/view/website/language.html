@@ -1,0 +1,44 @@
+<section id="page" class="view">
+    <h1 class="page-header">Website Development</h1>
+    <div ng-include src="'view/left-sidebar.html'"></div>
+    <div class="content-side">
+        <h6 class="mrgt15">Languages</h6>
+        <form class="form-horizontal" novalidate="" name="formEdit" ng-class="">
+            <table width="100%" class="mrgb20 mrgt10 tbl-border">
+                <thead>
+                <tr class="tbl-header">
+                    <th ng-repeat="th in header.rows" class="{{header.columns[th].class}}"
+                        ng-click="sort(header.columns[th].field, header.columns[th].icon)"
+                        width="{{header.columns[th].width}}">
+                        {{ header.columns[th].data }}
+                <span ng-show="header.columns[th].icon"
+                      class="icon-menu {{header.columns[th].iconSort}}"
+                      ng-class="">
+                </span>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr id="no_item" class="no_item" ng-if="paging.TotalItem == 0">
+                    <td colspan="12" align="center">
+                        <span>No item found</span>
+                    </td>
+                </tr>
+                <tr ng-repeat="(id, item) in list" ng-if="paging.TotalItem != 0">
+                    <td style="cursor: pointer;" nowrap="nowrap"
+                        ng-repeat="td in header.rows">
+                <span ng-show="header.columns[td].element != 'none'" ng-switch="header.columns[td].element">
+                    <input ng-switch-when="text" value="{{item[td]}}" type="text" name="lang[item[td]]"/>
+                    <input ng-switch-when="radio" value="{{item[td]}}" type="radio" name="lang[item[td]]"/>
+                    <input ng-switch-when="checkbox" ng-checked="item[td]" type="checkbox"
+                           ng-disabled="item.language == global.langDefault" name="lang[item[td]]"/>/>
+                    <span ng-switch-default data-toggle="modal" data-target="#modelEdit">{{item[td]}}</span>
+                </span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+        <button type="button" class="button left tiny" ng-click="save(formEdit)">Save</button>
+    </div>
+</section>

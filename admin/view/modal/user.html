@@ -1,0 +1,95 @@
+<div ng-if="start_edit" id="modelEdit" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" ng-if="member.ID == 0">Add Member</h4>
+                <h4 class="modal-title" ng-if="member.ID > 0">Edit Member</h4>
+            </div>
+            <div class="modal-body">
+                <form id="formEdit" name="formEdit" novalidate method="post">
+                    <div class="container-full" ng-if="start_edit">
+                        <div class="col-xs-12 col-md-6">
+                            <div class="form-group">
+                                <label for="FirstName">First Name:</label>
+                                <input type="text" class="form-control" id="FirstName"
+                                       ng-model="member.FirstName" name="member[FirstName]"
+                                       ng-class="{'alert-border': ngErrorRequired(formEdit, 'member[FirstName]')}" required>
+                                <label ng-show="ngErrorRequired(formEdit, 'member[FirstName]')"
+                                       class="error">First name is required</label>
+                            </div>
+                            <div class="form-group">
+                                <label for="UserName">Login Name:</label>
+                                <input type="text" class="form-control" id="UserName"
+                                       ng-model="member.UserName" name="member[UserName]"
+                                       ng-class="{'alert-border': ngErrorRequired(formEdit, 'member[UserName]')}" required>
+                                <label ng-show="ngErrorRequired(formEdit, 'member[UserName]')"
+                                       class="error">Username is required</label>
+                            </div>
+                            <div class="form-group">
+                                <label for="Password">Password:</label>
+                                <input type="text" class="form-control" id="Password"
+                                       ng-model="member.Password" name="member[Password]">
+                            </div>
+                            <div class="form-group">
+                                <label ng-if="statusList.length > 0" for="Active">Active:</label>
+                                <span ng-repeat="item in statusList" style="margin-right: 7px;">
+                                    <input type="radio" id="Active" name="member[Active]"
+                                           ng-value="item.key"  style="margin-right: 2px;"
+                                           ng-model="member.Active.key"/>
+                                    <span ng-bind="item.value"></span>
+                                </span>
+                            </div>
+                            <div class="form-group">
+                                <label for="Type">User Type:</label>
+                                <select name="member[Type]" id="Type"
+                                        ng-model="member.Type"
+                                        ng-options="item.value for item in typeList track by item.key">
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-md-6">
+                            <div class="form-group">
+                                <label for="LastName">Last Name:</label>
+                                <input type="text" class="form-control" id="LastName"
+                                       ng-model="member.LastName" name="member[LastName]"
+                                       ng-class="{'alert-border': ngErrorRequired(formEdit, 'member[LastName]')}" required>
+                                <label ng-show="ngErrorRequired(formEdit, 'member[LastName]')"
+                                       class="error">Last name is required</label>
+                            </div>
+                            <div class="form-group">
+                                <label for="Email">Email:</label>
+                                <input type="text" class="form-control" id="Email"
+                                       ng-model="member.Email" name="member[Email]"
+                                       ng-class="{'alert-border': ngErrorRequired(formEdit, 'member[Email]')}" required multiple-email>
+                                <label ng-show="ngErrorRequired(formEdit, 'member[Email]')"
+                                       class="error">Email is required</label>
+                                <label ng-show="ngInvalidEmail(formEdit, 'member[Email]')"
+                                       class="error">Email is invalid</label>
+                            </div>
+                            <div class="form-group">
+                                <label for="Confirm">Re-type Password:</label>
+                                <input type="text" class="form-control" id="Confirm"
+                                       ng-model="member.Confirm" name="member[Confirm]">
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Description:</label>
+                                <textarea style="min-height: 82px;" class="form-control" id="description"
+                                          ng-model="member.Confirm" name="member[Confirm]"></textarea>
+                            </div>
+
+                        </div>
+                    </div>
+                    <input type="hidden" id="ID" name="member[ID]" value="{{member.ID}}">
+                </form>
+                <div class="clearfix"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="button tiny" ng-click="save(formEdit)">Save</button>
+            </div>
+        </div>
+
+    </div>
+</div>

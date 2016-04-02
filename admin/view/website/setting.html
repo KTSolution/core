@@ -1,0 +1,177 @@
+<div id="website">
+    <h1 class="page-header">Website Development</h1>
+    <div ng-include src="'view/left-sidebar.html'"></div>
+    <div class="content-side">
+        <h6 class="rem mrgt15">Settings</h6>
+        <form name="formSetting" id="" novalidate method="post" enctype="multipart/form-data">
+            <div class="col-xs-6">
+                <div class="row">
+                    <div class="col-xs-7">
+                        <div class="row">
+                            <label>Website Name</label>
+                            <input type="text" class="form-control" id="SiteName"
+                                    ng-model="setting.SiteName" name="setting[SiteName]"
+                                    ng-class="{'alert-border': ngErrorRequired(formSetting, 'setting[SiteName]')}" required>
+                            <label ng-show="ngErrorRequired(formSetting, 'setting[SiteName]')"
+                                   class="error">Website name is required</label>
+                        </div>
+                    </div>
+                    <div class="col-xs-7">
+                        <div class="row">
+                            <label>Logo</label>
+                            <div class="col-xs-8">
+                                <div class="row">
+                                    <input type="file" id="uxLogo" fileupload="fileupload_options">
+                                    <input type="text" id="uxLogoText">
+                                    <a href="#!" id="uxLogoDelete" class="input-text-delete" title="Delete">X</a>
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="row">
+                                    <!--<a href="#!" class="button postfix error-nobdrl" id="uxLogoButton" ng-class="{'alert-border': ngErrorRequired('hotel_inf[image_items][logo]')}" tabindex="-1"> Choose File </a>-->
+                                    <a href="#!" class="button postfix error-nobdrl" id="uxLogoButton" ng-class=""> Choose File </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-7">
+                        <div class="row">
+                            <label>Logo Mobile</label>
+                            <div class="col-xs-8">
+                                <div class="row">
+                                    <input type="file" id="uxLogoMobile" fileupload="fileupload_options" data-type="logo" tabindex="-1">
+                                    <input type="text" id="uxLogoMobileText">
+                                    <a href="#!" id="uxLogoMobileDelete" class="input-text-delete" title="Delete">X</a>
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="row">
+                                    <!--<a href="#!" class="button postfix error-nobdrl" id="uxLogoButton" ng-class="{'alert-border': ngErrorRequired('hotel_inf[image_items][logo]')}" tabindex="-1"> Choose File </a>-->
+                                    <a href="#!" class="button postfix error-nobdrl" id="uxLogoMobileButton" ng-class="" tabindex="-1"> Choose File </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-7">
+                        <div class="row">
+                            <label>Favicon <small>(optional)</small></label>
+                            <div class="col-xs-8">
+                                <div class="row">
+                                    <input type="file" id="uxFavicon" fileupload="fileupload_options" data-type="favicon" tabindex="-1">
+                                    <input type="text" id="uxFaviconText">
+                                    <a href="#!" id="uxFaviconDelete" class="input-text-delete" title="Delete">X</a>
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="row">
+                                    <!--<a href="#!" class="button postfix error-nobdrl" id="uxLogoButton" ng-class="{'alert-border': ngErrorRequired('hotel_inf[image_items][logo]')}" tabindex="-1"> Choose File </a>-->
+                                    <a href="#!" class="button postfix error-nobdrl" id="uxFaviconButton" ng-class="" tabindex="-1"> Choose File </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <label>Website Footer</label>
+                            <textarea id="wsFooter" tinymce="tiny_options"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="row-fluid">
+                    <div class="col-xs-11">
+                        <div class="row">
+                            <label>Font</label>
+                            <div class="col-xs-8">
+                                <div class="row">
+                                    <input type="text" class="form-control" id="Font"
+                                           ng-model="setting.Font" name="setting[Font]">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <label>General Background</label>
+                            <div class="col-xs-5">
+                                <div class="row">
+                                    <input type="text" id="GeneralBackground" name="setting[GeneralBackground]"
+                                           ng-model="setting.GeneralBackground" minicolors>
+                                    <span class="minicolors-swatch"> <span class="minicolors-swatch-color" ></span></span>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="wauto" ng-show="item.define_widget!='yes'">
+                                    <a class="button info tiny marl1" id="GeneralBackgroundDefault" href="#!"
+                                       data-origin="GeneralBackground" defaultcolor="#fff">Default</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <label>Top Background</label>
+                            <div class="col-xs-5">
+                                <div class="row">
+                                    <input type="text" id="TopBackground" name="setting[TopBackground]"
+                                           ng-model="setting.TopBackground" minicolors>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="wauto" ng-show="item.define_widget!='yes'">
+                                    <a class="button info tiny marl1" id="TopBackgroundDefault" href="#!"
+                                       data-origin="TopBackground" defaultcolor="#49c9b0">Default</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <label>Top Menu Text</label>
+                            <div class="col-xs-5">
+                                <div class="row">
+                                    <input type="text" id="TopMenuText" name="setting[TopMenuText]"
+                                           ng-model="setting.TopMenuText" minicolors>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="wauto" ng-show="item.define_widget!='yes'">
+                                    <a class="button info tiny marl1" id="TopMenuTextDefault"  href="#!"
+                                       data-origin="TopMenuText" defaultcolor="#666666">Default</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <label>TopMenuMarkerText</label>
+                            <div class="col-xs-5">
+                                <div class="row">
+                                    <input type="text" id="TopMenuMarkerText" name="setting[TopMenuMarkerText]"
+                                           ng-model="setting.TopMenuMarkerText" minicolors>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="wauto" ng-show="item.define_widget!='yes'">
+                                    <a class="button info tiny marl1" id="TopMenuMarkerTextDefault" href="#!"
+                                       data-origin="TopMenuMarkerText" defaultcolor="#49C9B0">Default</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" name="hotel_inf[manual_custom_css]" value="0">
+            <input type="hidden" name="form_build_id" value="form-ORsbpSUgS35YmeAcw1vmRFahkHUhkXZouZI_SxVq0ww">
+            <input type="hidden" name="form_token" value="ZFss94sgb5LMvHhbMVBe8EKcrpmYOqULbvIpqWWVZiw">
+            <input type="hidden" name="form_id" value="development_settings_form">
+        </form>
+
+        <a class="button small" href="#!"
+            ng-loading-button="saving_settings"
+            completed-message="Saved!"
+            ng-click="save(formSetting)">Save</a>
+         <!--<span><img class="image-responsive" src="static/image/site/ajax-loader.gif" /></span>-->
+    </div>
+</div>
