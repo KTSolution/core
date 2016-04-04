@@ -82,13 +82,11 @@
                 <div class="row-fluid">
                     <div class="col-xs-11">
                         <div class="row">
-                            <label style="font-family: {{list.current_font.key}}">Font Family</label>
+                            <label>Font</label>
                             <div class="col-xs-8">
                                 <div class="row">
-                                    <select id="list.Font" name="list['Font']"
-                                            ng-model="list.current_font"
-                                            ng-options="item.value for item in list.font track by item.key">
-                                    </select>
+                                    <input type="text" class="form-control" id="Font"
+                                           ng-model="setting.Font" name="setting[Font]">
                                 </div>
                             </div>
                         </div>

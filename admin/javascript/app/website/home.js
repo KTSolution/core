@@ -1,6 +1,6 @@
 "use strict";
 
-app.controller('WebsiteSettingController',
+app.controller('WebsiteHomeController',
     function($scope, $rootScope, $route, apiService, $timeout, $location, $compile, $sce) {
         console.log('setting controller');
 
@@ -11,14 +11,14 @@ app.controller('WebsiteSettingController',
         $scope.start_edit = false;
 
         var link = {
-            list: '/website/setting',
-            edit: '/website/setting@edit',
-            save: '/website/setting@save',
-            delete: '/website/setting@delete'
+            list: '/website/website-home',
+            edit: '/website/website-home@edit',
+            save: '/website/website-home@save',
+            delete: '/website/website-home@delete'
         };
-        
+
         // init Tinymce
-        $scope.tiny_options = $tinymceOptions.tiny;
+        $scope.tiny_options = $tinymceOptions.default;
 
         $scope.init = function (data) {
             $scope.link     = link;
@@ -172,6 +172,10 @@ app.controller('WebsiteSettingController',
         if( $scope.tiny_options !== isInvalid ) tinyMCE.init($scope.tiny_options);
         $scope.init();
         $scope.fetchPage();
+
+        $scope.autoUrlChange = function() {
+
+        };
 
         $scope.ngDirtyInvalid = function(form, elementName) {
             return (form[elementName].$dirty

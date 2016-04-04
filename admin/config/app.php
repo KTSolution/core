@@ -1,20 +1,19 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Nam Dinh
- * Date: 2/16/2016
- * Time: 3:10 PM
- */
 
-// PAGES
-define('PAGE_SETTING',              0);
-define('PAGE_HOME',                 1);
-define('PAGE_ERROR',                2);
-define('PAGE_SEARCH',               3);
-define('PAGE_PRODUCT',              4);
-define('PAGE_ABOUT',                5);
-define('PAGE_BLOG',                 6);
-define('PAGE_SERVICE',              7);
-define('PAGE_CONTACT',              8);
-define('PAGE_FAQ',                  9);
-define('PAGE_PORTFOLIO',            10);
+return array(
+    PAGE_ADMIN_SETTING      => "/website/development/setting",
+    PAGE_HOME               => "/website/development/home",
+    PAGE_ERROR              => "/website/development/error",
+    PAGE_SEARCH             => "/website/development/search",
+    PAGE_PRODUCT            => "/website/development/product",
+    PAGE_ABOUT              => "/website/development/about",
+    PAGE_BLOG               => "/website/development/blog",
+    PAGE_SERVICE            => "/website/development/service",
+    PAGE_CONTACT            => "/website/development/contact",
+    PAGE_FAQ                => "/website/development/faq",
+    PAGE_PORTFOLIO          => "/website/development/portfolio",
+    PAGE_ADMIN_BANNER       => "/website/development/banner",
+    PAGE_ADMIN_CUSTOM_MENU  => "/website/development/menu",
+    PAGE_ADMIN_EXTRA_PAGE   => "/website/development/extra",
+    PAGE_ADMIN_LANGUAGE     => "/website/development/language",
+);

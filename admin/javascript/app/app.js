@@ -152,9 +152,27 @@ controllers.push({
     title: 'Language Management'
 });
 controllers.push({
-    name: 'SettingController',
+    name: 'WebsiteSettingController',
     template: 'website/setting.html',
     url: '/website/setting',
+    title: 'Website Development'
+});
+controllers.push({
+    name: 'WebsiteHomeController',
+    template: 'website/setup.html',
+    url: '/website/website-home',
+    title: 'Website Development'
+});
+controllers.push({
+    name: 'WebsiteAboutController',
+    template: 'website/setup.html',
+    url: '/website/website-about',
+    title: 'Website Development'
+});
+controllers.push({
+    name: 'WebsiteLanguageController',
+    template: 'website/language.html',
+    url: '/website/website-language',
     title: 'Website Development'
 });
 controllers.push({

@@ -174,11 +174,6 @@ app.directive('preventDefault', ['$timeout', function() {
 }]);
 
 app.directive('autoUrl', ['$timeout', function($timeout) {
-    /*var url = this.replace(/[^0-9a-zA-Z]/g, " ");
-     url = url.replace(/\s\s+/g, " ").trim();
-     url = url.replace(/\s/g, "-");*/
-    //return url.toLowerCase();
-
     return {
         restrict: 'A',
         link: function(scope, elm, attrs) {
@@ -189,6 +184,13 @@ app.directive('autoUrl', ['$timeout', function($timeout) {
                         scope.$watch(title, function() {
                             var url = scope.$eval(title);
                             if ( url ) {
+                                url= url.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g,"a");
+                                url= url.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g,"e");
+                                url= url.replace(/ì|í|ị|ỉ|ĩ/g,"i");
+                                url= url.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g,"o");
+                                url= url.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g,"u");
+                                url= url.replace(/ỳ|ý|ỵ|ỷ|ỹ/g,"y");
+                                url= url.replace(/đ/g,"d");
                                 url = url.replace(/[^0-9a-zA-Z]/g, " ");
                                 url = url.replace(/\s\s+/g, " ").trim();
                                 url = url.replace(/\s/g, "-");

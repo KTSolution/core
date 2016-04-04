@@ -6,8 +6,9 @@
  * Date: 3/13/2016
  * Time: 5:32 PM
  */
-class SettingController extends Controller
+class WebsiteAboutController extends Controller
 {
+
     public function index(){
         try{
             $request = $this->request->request;
@@ -63,10 +64,7 @@ class SettingController extends Controller
                 $item['type'] = $listGender[$item['type']];
             }
 
-            $fonts = $this->load->file('fonts');
-            $list['font'] = __render($fonts['font']);
-            $list['current_font'] = __render(FONT_ARIAL);
-            
+
             // merge data
             $header = array( 'columns' => $fields, 'rows' => array_keys($fields) );
             $filter = array( 'columns' => $filter, 'rows' => array_keys($filter) );

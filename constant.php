@@ -34,6 +34,12 @@ define('ERROR_MAILER_RECEIVER',             2007);
 define('ERROR_MAILER_NONE',                 0);
 
 // PAGES
+define('PAGE_ADMIN_SETTING',                0);
+define('PAGE_ADMIN_BANNER',                 1001);
+define('PAGE_ADMIN_LANGUAGE',               1002);
+define('PAGE_ADMIN_CUSTOM_MENU',            1003);
+define('PAGE_ADMIN_EXTRA_PAGE',             1004);
+
 define('PAGE_HOME',                         1);
 define('PAGE_ERROR',                        2);
 define('PAGE_SEARCH',                       3);

@@ -8,16 +8,35 @@
         <div class="clearfix">
             <select class="left" id="selected_language"
                     change-language="sidebar.current_lang.code" ng-model="sidebar.current_lang.code"
-                    ng-options="obj.code as obj.name for obj in sidebar.lang_items">
+                    ng-options="obj.code as obj.name for obj in sidebar.lang_item">
                 <option ng-repeat value="{{obj.code}}">{obj.name}}</option>
             </select>
+            <!--<select id="filter{{th}}"-->
+                    <!--ng-model="filter.columns[th].data"-->
+                    <!--ng-options="item.value for item in sidebar.lang_items track by item.key">-->
+            <!--</select>-->
         </div>
     </div>
+    <!--<nav class="left-nav">-->
+        <!--<ul class="side-nav">-->
+            <!--<li ng-repeat="(key, value) in sidebar.menu_items" ng-class="active" ng-model="value.key">-->
+                <!--<a href="/#!/{{value.link}}">-->
+                    <!--<span class="small-10 columns">{{value.title}}</span>-->
+                <!--</a>-->
+            <!--</li>-->
+        <!--</ul>-->
+    <!--</nav>-->
     <nav class="left-nav">
         <ul class="side-nav">
-            <li ng-repeat="(key, value) in sidebar.menu_items" ng-class="active" ng-model="value.key">
-                <a href="/#!/{{value.link}}">
-                    <span class="small-10 columns">{{value.title}}</span>
+            <li ng-repeat="item in sidebar.menu_item" ng-class="{'active' : {{(item.active == 'true')}}}">
+                <a href="#!/{{item.link}}">
+                    <span class="small-10 columns">{{item.data}}</span>
+                    <span ng-if="item.has_data == true"
+                          class="icon-checkmark color-green right"></span>
+                    <span ng-if="item.require == true && item.has_data == false"
+                          class="icon-close color-red right"></span>
+                    <span ng-if="item.require == false && item.has_data == false"
+                          class="icon-record color-orange right"></span>
                 </a>
             </li>
         </ul>
@@ -26,13 +45,14 @@
     <div class="website-dev">
         <div>
             <strong>Website Development</strong>
-            <span class="has-tip tip-right icon icon-info2" data-options="disable_for_touch:true" tooltip-help="website_development_inf" data-hasqtip="37"></span>
         </div>
         <div>
             <!-- ngIf: !sidebar.page_status -->
-            <!-- ngIf: sidebar.page_status == 1 --><label ng-if="sidebar.page_status == 1" class="ng-scope">
-            Basic info completed                <span class="icon-record color-orange right"></span>
-        </label>
+            <!-- ngIf: sidebar.page_status == 1 -->
+            <label ng-if="sidebar.page_status == 1" class="ng-scope">
+                Basic info completed
+                <span class="icon-record color-orange right"></span>
+            </label>
             <!-- ngIf: sidebar.page_status == 2 -->
         </div>
     </div>
