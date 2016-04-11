@@ -2,7 +2,7 @@
 
 app.controller('WebsiteHomeController',
     function($scope, $rootScope, $route, apiService, $timeout, $location, $compile, $sce) {
-        console.log('setting controller');
+        console.log('home controller');
 
         $scope.fetched = false;
         $scope.saving = false;
@@ -18,16 +18,33 @@ app.controller('WebsiteHomeController',
         };
 
         // init Tinymce
-        $scope.tiny_options = $tinymceOptions.default;
+        $scope.tiny_options = $tinymceOptions.normal;
 
         $scope.init = function (data) {
             $scope.link     = link;
             if ( typeof data != isInvalid ) {
                 $scope.sidebar = data.sidebar || {};
                 $scope.list = data.list || {};
+                $scope.setup = data.setup || {};
+                $scope.global = data.global || {};
             }
         };
 
+        $scope.autoUrlChange = function() {
+            $scope.setup.wsUrl = jQuery('#wsUrl').val();
+        };
+        $scope.keyupCountDown = function(elm, print, count) {
+            var limit = count - jQuery('#' + elm).val().length;
+            jQuery('#' + print).html(limit);
+            if ( limit >= 0 ) {
+                jQuery('#' + print).removeClass('red');
+            }
+            else {
+                jQuery('#' + print).addClass('red');
+            }
+        };
+
+        
         $scope.fetchPage = function (pageNum) {
             var params = {};
             if ( $scope.searching ) {
@@ -93,13 +110,13 @@ app.controller('WebsiteHomeController',
                 apiService.save($scope.link.save, form).then(function (response) {
                     $timeout(function () {
                         $scope.saving = false;
-                        jQuery('#modelEdit').modal('toggle');
-                        //jQuery('#modalEdit').foundation('reveal', 'close');
-                        $scope.init(response.data);
+                        if ( response != isNull) {
+                            $route.reload();
+                        }
                     }, 1000);
                 });
             }else{
-                var $elm = jQuery('#modalEdit input.ng-invalid:first');
+                var $elm = jQuery('input.ng-invalid:first');
                 $elm.focus();
                 doc.scrollElementToCenter($elm);
             }
@@ -172,11 +189,7 @@ app.controller('WebsiteHomeController',
         if( $scope.tiny_options !== isInvalid ) tinyMCE.init($scope.tiny_options);
         $scope.init();
         $scope.fetchPage();
-
-        $scope.autoUrlChange = function() {
-
-        };
-
+        
         $scope.ngDirtyInvalid = function(form, elementName) {
             return (form[elementName].$dirty
             && form[elementName].$invalid && $scope.submitted);

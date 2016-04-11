@@ -29,14 +29,12 @@ class SettingController extends Controller
                 'Email'   => array('data' => USER_GUEST, 'content' => $listGender,
                     'label' => 'Email', 'element' => 'select', 'class' => 'perc20')
             );
-
-            // init values
-//            $items = $this->load->model('Member', 'get_member_list');
-//            $totalItems = $items->num_rows;
-//            $list = $items->rows;
-
-            $sidebar = $this->load->json("common/SideBar");
-
+//            $session = isset($_SESSION['development_report_page']) ? $_SESSION['development_report_page'] :
+//                array('filter'=> array_combine($filter_fields, $filter_values));
+//
+//            foreach (array_keys($session['filter']) as $key) {
+//                $filter[$key] = isset($_GET[$key]) ? $_GET[$key] : $session['filter'][$key];
+//            }
             $listGender = array(
                 USER_GUEST              =>  "-- Select --",
                 USER_SUPER_ADMIN        =>  "Super Admin",
@@ -63,10 +61,16 @@ class SettingController extends Controller
                 $item['type'] = $listGender[$item['type']];
             }
 
+            $sidebar = $this->load->json("common/SideBar");
+
             $fonts = $this->load->file('fonts');
-            $list['font'] = __render($fonts['font']);
-            $list['current_font'] = __render(FONT_ARIAL);
-            
+            $fonts = array(
+                '#type' => '#select',
+                '#default' => FONT_ARIAL,
+                '#value' => $fonts['font']
+            );
+            $list['fonts'] = __render_html($fonts);
+
             // merge data
             $header = array( 'columns' => $fields, 'rows' => array_keys($fields) );
             $filter = array( 'columns' => $filter, 'rows' => array_keys($filter) );

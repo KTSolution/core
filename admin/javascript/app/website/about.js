@@ -18,7 +18,7 @@ app.controller('WebsiteAboutController',
         };
 
         // init Tinymce
-        $scope.tiny_options = $tinymceOptions.default;
+        $scope.tiny_options = $tinymceOptions.normal;
 
         $scope.init = function (data) {
             $scope.link     = link;

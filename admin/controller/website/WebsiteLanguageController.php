@@ -5,7 +5,7 @@
  * Date: 3/13/2016
  * Time: 5:32 PM
  */
-class LanguageController extends Controller
+class WebsiteLanguageController extends Controller
 {
 
     public function index(){
@@ -33,20 +33,23 @@ class LanguageController extends Controller
             }
 
             // init values
-            $model = $this->load->eloquent("Language");
+            $model = $this->model("Language");
             $list = $model::_filter($params);
 
 
             // merge data
             $header = array( 'columns' => $fields, 'rows' => array_keys($fields) );
             $filter = array( 'columns' => $filter, 'rows' => array_keys($filter) );
+            $sidebar = $this->load->json("common/SideBar");
 
             $data['test']               = $test;
             $data['header']             = $header;
             $data['filter']             = $filter;
             $data['list']               = $list;
-            $data['paging']             = $paging;
             $data['global']             = $global;
+            $data['paging']             = $paging;
+            $data['sidebar']            = $sidebar;
+
 
             return $data;
 
@@ -55,75 +58,15 @@ class LanguageController extends Controller
         }
     }
 
-    public function edit() {
-        $request = $this->request->request;
-        $loader = $this->load;
-
-        $pid = $request['pid'];
-        $modelMember =$loader->eloquent("Member");
-        if( $pid > 0) {
-            $items = $modelMember::find($pid);
-        } else {
-            $items = $modelMember::_make();
-        }
-
-        $listType = array(
-            USER_GUEST               =>  "-- Select --",
-            USER_SUPER_ADMIN        =>  "Super Admin",
-            USER_ADMIN              =>  "Admin",
-            USER_PARTNER            =>  "Partner",
-            USER_MEMBER             =>  "Member",
-        );
-
-        $statusList = array(
-            USER_STATUS_DEACTIVE    => "Inactive",
-            USER_STATUS_ACTIVE      => "Active",
-        );
-
-        $data['member']         = $items;
-        $data['typeList']       = __render($listType);
-        $data['statusList']     = __render($statusList);
-
-        return $data;
-    }
-
     public function save() {
-        $loader = $this->load;
-        $post = $this->request->post['member'];
 
-        $data['first_name'] = $post['FirstName'];
-        $data['last_name'] = $post['LastName'];
-        $data['email'] = $post['Email'];
-        $data['type'] = $post['Type'];
-        $data['enable'] = $post['Active'];
-        $data['login_name'] = $post['UserName'];
-        if( !empty($post['Password']) ) {
-            $data['password'] = $post['Password'];
+        $post = $this->request->post;
+        $languages = $post['lang'];
+        $mLang = $this->model("Language");
+        $mLang::_saveLanguageActive($languages);
+        if ( count($languages) ) {
+            $this->session->data['language'] = LANG_DEFAULT;
         }
-
-        $model = $loader->eloquent("Member");
-        $data = $model::_save($data, $post['ID']);
-//        if ( $post['ID'] > 0) {
-//            $member = $post['ID'];
-//            $member = $model::_make();
-//        } else {
-//            unset($post['ID']);
-//            $member = $model::create($data);
-//        }
-//
-//        $member->save();
-        return $data;
-        //return $this->index();
-    }
-
-    public function delete() {
-        $request = $this->request->request;
-        $loader = $this->load;
-
-        $pid = $request['pid'];
-        $model = $loader->eloquent('Member');
-        $model::find($pid)->delete();
-
         return $this->index();
     }
 

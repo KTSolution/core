@@ -14,26 +14,25 @@ app.controller('WebsiteLanguageController',
             list: '/website/website-language',
             edit: '/website/website-language@edit',
             save: '/website/website-language@save',
+            change: '/website/website-language@change',
             delete: '/website/website-language@delete'
         };
 
         // init Tinymce
-        $scope.tiny_options = $tinymceOptions.normal;
+        $scope.tiny_options = $tinymceOptions.tiny;
 
         $scope.init = function (data) {
             $scope.link     = link;
             if ( typeof data != isInvalid ) {
-                $scope.sidebar = data.sidebar || {};
+                $scope.list     = data.list || {};
+                $scope.global   = data.global || {};
                 $scope.header   = data.header || {};
                 $scope.filter   = data.filter || {};
                 $scope.paging   = data.paging || {};
-                $scope.list = data.list || {};
-                $scope.global = data.global || {};
-                $scope.setup = data.setup || {};
+                $scope.gender   = data.gender || {};
             }
         };
 
-        
         $scope.fetchPage = function (pageNum) {
             var params = {};
             if ( $scope.searching ) {
@@ -51,7 +50,7 @@ app.controller('WebsiteLanguageController',
                     }
                 }
             }
-            
+
             if (  $scope.paging == isDefined ) {
                 if (pageNum == 'n') pageNum = $scope.paging.PageNext;
                 else if (pageNum == 'p') pageNum = $scope.paging.PagePrev;
@@ -80,11 +79,26 @@ app.controller('WebsiteLanguageController',
 
             apiService.get($scope.link.edit, id).then(function (response) {
                 var data = response.data;
-                $scope.obj = {};
+                $scope.member = {};
                 if ( typeof data != isInvalid ) {
 
+                    $scope.typeList = data.typeList;
+                    $scope.statusList = data.statusList;
+
+                    var member = data.member;
+                    $scope.member.ID = id;
+                    $scope.member.Type = __render(member.type);
+                    $scope.member.Active = __render(member.enable);
+                    $scope.member.FirstName = member.first_name;
+                    $scope.member.LastName = member.last_name;
+                    $scope.member.Email = member.email;
+                    $scope.member.UserName = member.login_name;
                 }
             });
+        };
+
+        $scope.change = function(id){
+            
         };
 
         $scope.save = function(form){
@@ -99,14 +113,12 @@ app.controller('WebsiteLanguageController',
                 apiService.save($scope.link.save, form).then(function (response) {
                     $timeout(function () {
                         $scope.saving = false;
-                        if ( response != isNull) {
-                            jQuery('#modelEdit').modal('toggle');
-                            $scope.init(response.data);
-                        }
+                        jQuery('#modelEdit').modal('toggle');
+                        $scope.init(response.data);
                     }, 1000);
                 });
             }else{
-                var $elm = jQuery('input.ng-invalid:first');
+                var $elm = jQuery('#modalEdit input.ng-invalid:first');
                 $elm.focus();
                 doc.scrollElementToCenter($elm);
             }
@@ -179,7 +191,7 @@ app.controller('WebsiteLanguageController',
         if( $scope.tiny_options !== isInvalid ) tinyMCE.init($scope.tiny_options);
         $scope.init();
         $scope.fetchPage();
-        
+
         $scope.ngDirtyInvalid = function(form, elementName) {
             return (form[elementName].$dirty
             && form[elementName].$invalid && $scope.submitted);
@@ -200,4 +212,4 @@ app.controller('WebsiteLanguageController',
 
         jQuery('#modalEdit').on('hidden.bs.modal', function() { $timeout(function() { $scope.start_edit = false; }, 500); });
         jQuery('#modalEdit').on('show.bs.modal', function() { $scope.start_edit = true; });
-});
+    });

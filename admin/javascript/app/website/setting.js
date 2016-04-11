@@ -99,7 +99,7 @@ app.controller('WebsiteSettingController',
                     }, 1000);
                 });
             }else{
-                var $elm = jQuery('#modalEdit input.ng-invalid:first');
+                var $elm = jQuery('input.ng-invalid:first');
                 $elm.focus();
                 doc.scrollElementToCenter($elm);
             }

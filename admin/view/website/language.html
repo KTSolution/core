@@ -3,7 +3,7 @@
     <div ng-include src="'view/left-sidebar.html'"></div>
     <div class="content-side">
         <h6 class="mrgt15">Languages</h6>
-        <form class="form-horizontal" novalidate="" name="formEdit" ng-class="">
+        <form class="form-horizontal" novalidate="" id="formEdit" name="formEdit" ng-class="">
             <table width="100%" class="mrgb20 mrgt10 tbl-border">
                 <thead>
                 <tr class="tbl-header">
@@ -29,10 +29,12 @@
                     <td ng-show="header.columns[td].element != 'none'"
                         ng-repeat="td in header.rows">
                 <span ng-switch="header.columns[td].element">
-                    <input ng-switch-when="text" value="{{item[td]}}" type="text" name="lang[item[td]]" class="clickable"/>
-                    <input ng-switch-when="radio" value="{{item[td]}}" type="radio" name="lang[item[td]]" class="clickable"/>
-                    <input ng-switch-when="checkbox" ng-checked="item[td]" type="checkbox"
-                           ng-disabled="item.language == global.langDefault" name="lang[item[td]]" class="clickable"/>
+                    <input ng-switch-when="text" value="{{item[td]}}" type="text" name="lang[{{item[td]}}]" class="clickable"/>
+                    <input ng-switch-when="radio" value="{{item[td]}}" type="radio" name="lang[{{item[td]}}]" class="clickable"/>
+                    <input ng-switch-when="checkbox" type="checkbox" name="lang[{{item.code}}]" class="clickable"
+                           ng-checked="item[td]"
+                           ng-true-value="1" ng-false-value="0"
+                           ng-disabled="item.code == global.initLang"/>
                     <span ng-switch-default data-toggle="modal" data-target="#modelEdit">{{item[td]}}</span>
                 </span>
                     </td>
@@ -40,6 +42,9 @@
                 </tbody>
             </table>
         </form>
-        <button type="button" class="button left tiny" ng-click="save(formEdit)">Save</button>
+        <a class="button small" href="#!"
+           ng-loading-button="saving"
+           completed-message="Saved!"
+           ng-click="save(formEdit)">Save</a>
     </div>
 </section>

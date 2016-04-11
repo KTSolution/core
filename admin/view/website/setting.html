@@ -85,9 +85,9 @@
                             <label style="font-family: {{list.current_font.key}}">Font Family</label>
                             <div class="col-xs-8">
                                 <div class="row">
-                                    <select id="list.Font" name="list['Font']"
-                                            ng-model="list.current_font"
-                                            ng-options="item.value for item in list.font track by item.key">
+                                    <select id="list.Fonts" name="list['Fonts']"
+                                            ng-model="list.fonts.default"
+                                            ng-options="item.value for item in list.fonts.data track by item.key">
                                     </select>
                                 </div>
                             </div>

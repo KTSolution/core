@@ -12,6 +12,7 @@ var isObject = angular.isObject,
     isDate = angular.isDate,
     isInvalid = 'undefined',
     isEmpty = '',
+    isNull = null,
     forEach = angular.forEach,
     bodyElement = angular.element(document.body),
     injector = angular.injector(['ng']),
@@ -20,6 +21,10 @@ var isObject = angular.isObject,
     loadingClass = 'deferred-bootstrap-loading',
     errorClass = 'deferred-bootstrap-error';
 
+function removePopup() {
+    jQuery('body').removeClass('modal-open');
+    jQuery('.modal-backdrop').remove();
+}
 
 function __render( value1, value2 ) {
     if ( value2 != isUndefined ) return { key : value1, value: value2};
@@ -53,7 +58,7 @@ $uploadOptions.default = {
 };
 
 var $tinymceOptions = {};
-$tinymceOptions.default = {
+$tinymceOptions.normal = {
     version: 3,
     theme: "advanced",
     width: "100%",
@@ -173,6 +178,12 @@ controllers.push({
     name: 'WebsiteLanguageController',
     template: 'website/language.html',
     url: '/website/website-language',
+    title: 'Website Development'
+});
+controllers.push({
+    name: 'WebsiteContactController',
+    template: 'website/setup.html',
+    url: '/website/website-contact',
     title: 'Website Development'
 });
 controllers.push({
@@ -362,11 +373,19 @@ app.factory('apiService', function($http, $resource, $q) {
         },
         save: function( url, form ) {
             var path = ktsPath.action + url;
-            var form = jQuery("#" + form.$name).serialize();
-            var promise= $http.post( path, form, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}} )
+            var query = jQuery("#" + form.$name).serialize();
+            var promise= $http.post( path, query, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}} )
                 .then( function (response ) {
                     return response.data;
                 });
+            return promise;
+        },
+        save_map: function(url, data, zoom) {
+            var path = ktsPath.action + url;
+            var query = 'MarkListSave=' + data + '&map_zoom_save=' + zoom;
+            var promise= $http.post( path, query, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
+            ).then(function (response) {
+                return response.data;});
             return promise;
         },
         delete: function( url, pid ){

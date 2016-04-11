@@ -6,10 +6,8 @@ define('USER_ADMIN',                        1);
 define('USER_PARTNER',                      2);
 define('USER_MEMBER',                       3);
 
-define('USER_STATUS_DEACTIVE',              0);
-define('USER_STATUS_ACTIVE',                1);
-define('USER_STATUS_BLOCK',                 2);
-define('USER_STATUS_LOCK',                  3);
+define('USER_STATUS_NONE',                  0);
+define('USER_STATUS_LOCK',                  1);
 
 
 define('ELEMENT_SELECT',                    1);
@@ -32,6 +30,11 @@ define('ERROR_MAILER_SENDING',              2005);
 define('ERROR_MAILER_SENDER',               2006);
 define('ERROR_MAILER_RECEIVER',             2007);
 define('ERROR_MAILER_NONE',                 0);
+
+// PAGE TYPE 
+define('PAGE_TYPE_INTERNAL',                 1);
+define('PAGE_TYPE_EXTERNAL',                 2);
+define('PAGE_TYPE_ADMIN',                    3);
 
 // PAGES
 define('PAGE_ADMIN_SETTING',                0);
@@ -77,3 +80,15 @@ define('ENABLE',                            1);
 define('STATUS_UNLOCK',                     0);
 define('STATUS_LOCK',                       1);
 define('STATUS_LIVE',                       2);
+
+// GOOGLE MAP
+define('MAP_STATIC',                        1);
+define('MAP_GOOGLE',                        2);
+
+define('MAP_GOOGLE_MARK_SHOPPING',          1);
+define('MAP_GOOGLE_MARK_RESTAURANT',        2);
+define('MAP_GOOGLE_MARK_HOTEL',             3);
+
+define('MAP_GOOGLE_LAYOUT_MAP',             1);
+define('MAP_GOOGLE_LAYOUT_SATELLITE',       2);
+define('MAP_GOOGLE_LAYOUT_TERRAIN',         3);

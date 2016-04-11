@@ -122,3 +122,43 @@ function __render($value1, $value2="", $k="key", $v="value"){
         return $obj;
     }
 }
+
+function __render_html($data){
+    $return = array();
+	switch ($data['#type']) {
+		case '#select':
+            $return['default']['key'] = $data['#default'];
+            foreach ($data['#value'] as $key => $value) {
+                if( is_array($value) || is_object($value) ) {
+                    $obj['key'] = $value[0];
+                    $obj['value'] = $value[1];
+                } else {
+                    $obj['key'] = $key;
+                    $obj['value'] = $value;
+                }
+
+                $return['data'][] = $obj;
+            }
+			break;
+		case '#chekbox':
+			break;
+		case '#text':
+			break;
+		case '#radio':
+			break;
+		default:
+			return "";
+	}
+    
+    return $return;
+}
+
+function __global($type){
+    return array (
+        'isMasterAdmin'     => in_array($type, array(USER_SUPER_ADMIN, USER_ADMIN, USER_PARTNER)),
+        'isGlobalAdmin'     => in_array($type, array(USER_ADMIN, USER_PARTNER)),
+        'isPartner'         => in_array($type, array(USER_PARTNER)),
+        'initLang'       	=> LANG_DEFAULT,
+        'multiLang'       	=> LANG_MULTI,
+    );
+}

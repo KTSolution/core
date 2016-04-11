@@ -31,7 +31,7 @@ app.directive('tinymce', ['$timeout', function ($timeout) {
             attrs.$set('id', 'rte' + generatedId);
         }
 
-        var uiTinymceConfig = $tinymceOptions.default;
+        var uiTinymceConfig = $tinymceOptions.normal;
         // var uiTinymceConfig = {
         //     //theme_advanced_fonts: Drupal.settings.tinyMCEFonts
         // };
@@ -173,6 +173,85 @@ app.directive('preventDefault', ['$timeout', function() {
     };
 }]);
 
+app.directive('ngLoadingButton', ['$timeout', function() {
+    return {
+        restrict: 'A',
+        link: function(scope, elm, attrs) {
+            var elm_float_right = elm.css('float') == 'right';
+            var button_saving   = elm.attr('ng-loading-button');
+            var valid           = elm.attr('check-valid');
+            //console.log(valid);
+            if ( button_saving ) {
+                scope.$watch(button_saving, function() {
+                    var saving = scope.$eval(button_saving);
+                    var chk    = scope.$eval(valid);
+                    if ( saving ) {
+                        elm.addClass('button-disable');
+                        var base_url = ktsSetting.ngKTSPath.base_url;
+                        var lmsg = elm.attr('loading-message');
+                        lmsg = lmsg ? lmsg : '';
+                        if ( elm_float_right ) {
+                            elm.after( '<span class="send-process sending pull-right"><small><i class="fa fa-2x fa-spinner fa-spin"></i></small></span>' );
+                        }
+                        else {
+                            elm.after( '<span class="send-process sending"><small><i class="fa fa-spinner fa-2x fa-spin"></i>' + lmsg + '</small></span>' );
+                        }
+                    }
+                    else {
+                        elm.removeClass('button-disable');
+                        var $img = elm.next();
+                        if ( $img.hasClass('sending') ) {
+                            var msg = elm.attr('completed-message');
+                            if ( msg ) {
+                                $img.removeClass('send-process')
+                                    .removeClass('sending')
+                                    .addClass('send-process sent')
+                                    .children('img').remove();
+                                if ( chk != 1 ) {
+                                    $img.html('<span class="icon"><i class="fa fa-check-square-o"></i></span><small>' + msg + '</small>');
+                                    setTimeout(function() {
+                                        $img.remove();
+                                    }, 3000)
+                                }
+                            }
+                            else {
+                                $img.remove();
+                            }
+                        }
+                    }
+                }, true);
+            }
+        }
+    };
+}]);
+
+app.directive('countDown', ['$timeout', function($timeout) {
+    return {
+        restrict: 'A',
+        link: function(scope, elm, attrs) {
+            $timeout(function() {
+                var attr = attrs.countDown;
+                scope.$watch(attr, function() {
+                    var label = attrs.countDown;
+                    var count = elm.attr('maxNum');
+                    
+                    if ( typeof count == 'undefined')
+                        count = 60;
+                    
+                    var limit = count - elm.val().length;
+                    jQuery('#' + label).html(limit);
+                    if (limit >= 0) {
+                        jQuery('#' + label).removeClass('red');
+                    }
+                    else {
+                        jQuery('#' + label).addClass('red');
+                    }
+                }, true);
+            }, 300);
+        }
+    };
+}]);
+
 app.directive('autoUrl', ['$timeout', function($timeout) {
     return {
         restrict: 'A',
@@ -205,6 +284,20 @@ app.directive('autoUrl', ['$timeout', function($timeout) {
                     }
                 }
             }, 300);
+        }
+    };
+}]);
+
+app.directive('ngName', ['$compile', function($compile) {
+    return {
+        restrict: "A",
+        terminal: true,
+        priority: 1000,
+        link: function(scope, element, attrs) {
+            var name = scope.$eval(element.attr('ng-name'));
+            element.removeAttr('ng-name');
+            element.attr('name', name);
+            $compile(element)(scope);
         }
     };
 }]);
@@ -491,4 +584,42 @@ app.directive('fileupload', ['$timeout', function($timeout) {
         }
     };
 }]);
+
+app.directive('changeLanguage', ['$rootScope', '$route', '$http','$timeout', function($rootScope, $route, $http, $timeout) {
+// directive.changeLanguage = function($rootScope, $route, $http, $timeout) {
+    return function(scope, element, attrs) {
+        $timeout(function() {
+            element.change(function() {
+                //Prevent change page if not save data
+                // if(jQuery('#data_not_save').val() == '1') {
+                //     jQuery('#data_change_language').val(1);
+                //     jQuery('#page_change_url').val(window.location.hash.replace('#!/', '/'));
+                //     jQuery('#data_not_save_alert').foundation('reveal', 'open');
+                //     $timeout(function() {
+                //         jQuery('.reveal-modal-bg').show();
+                //     }, 500);
+                //     return;
+                // }
+
+                var lang = scope.$eval(element.attr('change-language'));
+                if ( typeof(lang) == 'object'){
+                    lang = lang['key'];
+                }
+
+                // hls.infoMsg(Drupal.t('Loading data... Please wait!'));
+                $http.get(
+                    ktsSetting.ngKTSPath.action
+                    + 'website/website-language@change_current_lang?lang='
+                    + lang
+                ).success(function(response) {
+                    //hls.clearMsg();
+                    $route.reload();
+                }).error(function() {
+                    //hls.clearMsg();
+                });
+            });
+        }, 500);
+    };
+}]);
+
 // angular.module('appDirectives', []).directive(directive);

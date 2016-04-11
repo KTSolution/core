@@ -1,13 +1,24 @@
 <?php
 class Language {
-	private $default = 'english';
+	private $default = LANG_DEFAULT;
+	public $current = LANG_DEFAULT;
 	private $directory = "english";
-	private $data = array();
+	public $data = array();
 
 	public function __construct($directory = '') {
 		$this->directory = $directory;
 	}
 
+	public function change( $lang) {
+		if( isset($lang->code)) {
+			$this->current = $lang->code;	
+		}
+
+		if( isset($lang->directory)) {
+			$this->directory = $lang->directory;
+		}
+	}
+	
 	public function get($key) {
 		return (isset($this->data[$key]) ? $this->data[$key] : $key);
 	}
@@ -38,5 +49,27 @@ class Language {
 		$this->data = array_merge($this->data, $_);
 
 		return $this->data;
+	}
+
+	public function set_text($old_content, $new_content, $lang) {
+		$old_content = json_decode($old_content);
+		if(!is_object($old_content)) {
+			$old_content = new stdClass();
+		}
+		$old_content->$lang = trim($new_content);
+		return json_encode($old_content);
+	}
+
+	public function get_text($content, $lang) {
+		$obj = json_decode($content);
+		if( is_object($obj) ) {
+			if ( isset($obj->$lang) ) {
+				return trim($obj->$lang);
+			}
+
+            $content = isset($obj->{LANG_DEFAULT}) ? '[' . trim($obj->{LANG_DEFAULT}) . ']' : "";
+			return $content;
+		}
+		return $content;
 	}
 }

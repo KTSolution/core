@@ -25,9 +25,15 @@ class Session {
 			$_SESSION[$key] = array();
 		}
 
-		array_merge($this->data, $_SESSION[$key]);
+//		array_merge($this->data, $_SESSION[$key]);
+        $this->data =& $_SESSION[$key];
 	}
 
+
+	public function set($key, $name) {
+		$_SESSION[$key] = $name;
+	}
+	
 	public function getId() {
 		return session_id();
 	}

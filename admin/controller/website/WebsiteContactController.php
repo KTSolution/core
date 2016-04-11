@@ -6,7 +6,7 @@
  * Date: 3/13/2016
  * Time: 5:32 PM
  */
-class WebsiteHomeController extends Controller
+class WebsiteContactController extends Controller
 {
 
     public function index(){
@@ -14,13 +14,13 @@ class WebsiteHomeController extends Controller
             $request = $this->request->request;
             $session = $this->session->data;
             $language = $this->language;
-            $data = $paging = $sidebar = $filter = $test = $header = $list = array();
+            $data = $setting = $paging = $sidebar = $filter = $test = $header = $list = array();
             $user = new stdClass(); $user->type = 1;
             $global = __global($user->type);
 
             $mSetup = $this->model("Page");
             $page_info = $mSetup::where('enable','=',1)
-                ->where('id', '=', PAGE_HOME)
+                ->where('id', '=', PAGE_CONTACT)
                 ->where('type', '=', PAGE_TYPE_INTERNAL)
                 ->first();
 
@@ -33,11 +33,40 @@ class WebsiteHomeController extends Controller
                 $setup->wsMetaKeyword       = $language->get_text($page_info->keyword, $language->current);
             }
 
-
             $sidebar = $this->load->json("common/SideBar");
 
+            $item = array(
+                'mIndex'=>0,
+                'mLat'=>9.6101651187195,
+                'mLng'=>105.95440632788,
+                'mSaved'=>true,
+                'mTitle'=>"Nam Kỳ Khởi Nghĩa",
+                'mTitleOrg'=>'{"vn":"Nam Kỳ Khởi Nghĩa","en":"[Nam Kỳ Khởi Nghĩa]"}',
+                'mType'=> 1
+            );
+            $mList[] = $item;
+            $typeList = array(
+                MAP_GOOGLE_MARK_SHOPPING => "Shopping",
+                MAP_GOOGLE_MARK_RESTAURANT => "Restaurant",
+                MAP_GOOGLE_MARK_HOTEL => "Hotel",
+            );
+            $iconList = array(
+                MAP_GOOGLE_MARK_SHOPPING => "Shopping",
+                MAP_GOOGLE_MARK_RESTAURANT => "Restaurant",
+                MAP_GOOGLE_MARK_HOTEL => "Hotel",
+            );
+
+            $setting['map_type'] = MAP_GOOGLE;
+            $setting['markerData'] = array(
+                'mapLayout' => MAP_GOOGLE_LAYOUT_MAP,
+                'list' => $mList,
+                'typeList' => $typeList,
+                'iconList' => $iconList,
+                'zoomLevel' => 17
+            );
+
             // render to js
-            $data['test']               = $test;
+            $data['test']               = $language;
             $data['header']             = $header;
             $data['filter']             = $filter;
             $data['list']               = $list;
@@ -45,6 +74,7 @@ class WebsiteHomeController extends Controller
             $data['sidebar']            = $sidebar;
             $data['paging']             = $paging;
             $data['setup']              = $setup;
+            $data['setting']            = $setting;
 
             return $data;
 
@@ -68,8 +98,12 @@ class WebsiteHomeController extends Controller
         }
 
         $model = $this->model("Page");
-        $model::_save($data, PAGE_HOME, $json, $language);
+        $model::_save($data, PAGE_CONTACT, $json, $language);
         
         return $this->index();
+    }
+
+    public function location_save_map(){
+        return "";
     }
 }

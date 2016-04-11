@@ -43,6 +43,11 @@ body, input, textarea, select {
     float: left;
 	padding: 1.5rem;
 }
+a:focus, a:hover {
+    text-decoration: none;
+    border: none;
+    color: inherit;
+}
 .rem {
 	font-size: 1rem;
 }
@@ -72,6 +77,19 @@ input[type="text"], input[type="password"], input[type="date"], input[type="date
 	-moz-transition: -moz-box-shadow 0.45s,border-color 0.45s ease-in-out;
 	transition: box-shadow 0.45s,border-color 0.45s ease-in-out;
  }
+input[type="radio"].rd-ck-inline {
+    margin: 0.375rem 0.25rem 1.125rem 0;
+}
+.content-side input.mrgb5, .content-side select.mrgb5 {
+    margin-bottom: 0.3125rem;
+}
+input[type="checkbox"]+label, input[type="radio"]+label {
+    display: inline-block;
+    margin-left: 0;
+    margin-right: 0.3125rem;
+    margin-bottom: 0;
+    vertical-align: baseline;
+}
 select:hover {
 	background-color: #f3f3f3;
 	border-color: #999;
@@ -238,6 +256,7 @@ form {
     border-bottom: 1px solid #eee;
     font-size: 1.5rem;
 }
+
 .modal-content{
     border-radius: 0;
     background-color: #ccc;
@@ -368,7 +387,11 @@ ins {
 del {
     text-decoration: line-through;
 }
-
+table {
+    background: #fff;
+    margin-bottom: 0.625rem;
+    border: solid 1px #ddd;
+}
 /* Clear Fix Styles */
 .clearfix:after {
     visibility: hidden;
@@ -635,8 +658,9 @@ del {
     color: #000;
 }
 .red {
-    color: #000;
+    color: red;
 }
+
 .green {
     color: #000;
 }
@@ -646,6 +670,47 @@ del {
 .blue {
     color: #000;
 }
+.font11 {
+    font-size: 0.6875rem !important;
+}
+.mrgt10 {
+	margin-top: 0.625rem;
+}
+.mrgr4 {
+	margin-right: 0.25rem !important;
+}
+.mrgr5 {
+	margin-right: 0.3125rem !important;
+}
+.mrgr10 {
+    margin-right: 0.625rem !important;
+}
+.mrgb-2 {
+	margin-bottom: -0.125rem !important;
+}
+.mrgb0 {
+    margin-bottom: 0rem !important;
+}
+.mrgb20 {
+    margin-bottom: 1.25rem !important;
+}
+.mrgl5 {
+	margin-left: 0.3125rem !important;
+}
+.mrgl20 {
+	margin-left: 1.25rem !important;
+}
+
+.alert-border {
+    border: 0.0625rem solid red !important;
+    margin-bottom: 0.1875rem !important;
+}
+.left {
+    float: left !important;
+}
+.right {
+    float: right !important;
+}
 label {
     font-size: 0.75rem;
     color: #000;
@@ -654,10 +719,6 @@ label {
     font-weight: normal;
     margin-bottom: 0.1875rem;
     line-height: 1.3;
-}
-.alert-border {
-	border: 0.0625rem solid red !important;
-	margin-bottom: 0.1875rem !important;
 }
 label.error, .upload-status {
 	margin-bottom: 0.625rem;
@@ -669,10 +730,8 @@ label.error {
 label.inline {
 	height: 1.625rem;
 	line-height: 1rem;
-}
-label.inline {
-	margin: 0 0 0.625rem 0;
-	padding: 0.3125rem 0.3125rem;
+    margin: 0 0 0.625rem 0;
+    padding: 0.3125rem 0;
 }
 
 #main-body>div {
@@ -821,7 +880,7 @@ label.inline {
     border-collapse: collapse;
     border-spacing: 0;
 }
-.view table thead, .view table tfoot {
+table thead, table tfoot {
     background: #f5f5f5;
     font-weight: 400;
 }
@@ -835,6 +894,20 @@ tr {
     vertical-align: inherit;
     border-color: inherit;
 }
+table.add-bg input, table.add-bg select {
+    margin: 0 !important;
+    display: inline;
+}
+
+table tr.even, table tr.alt, table tr:nth-of-type(even) {
+    background: #f9f9f9;
+}
+table tbody tr:hover {
+    background-color: #ebf5fe;
+}
+table.add-bg tr:nth-of-type(2n) {
+    background-color: #fff;
+}
 table thead tr th {
     vertical-align: middle;
 }
@@ -844,6 +917,9 @@ table thead tr th, table tfoot tr th {
     border-bottom-color: #ddd;
     text-align: center;
     font-size: 0.75rem;
+}
+table.add-bg tr:nth-of-type(2n):hover {
+    background-color: #ebf5fe;
 }
 table.tbl-border thead tr th, table.tbl-border tfoot tr th {
     border-right: 1px solid #f5f5f5;
@@ -864,11 +940,9 @@ table tr th, table tr td {
 table tbody tr td {
     border-right-color: #ddd;
     border-bottom-color: transparent;
+	text-align: center;
 }
-table tbody tr td, table thead tr td {
-    text-align: center;
-    border-right: 1px solid #ddd;
-}
+
 table tr.even, table tr.alt, table tr:nth-of-type(even) {
     background: #f9f9f9;
 }
@@ -891,12 +965,7 @@ table tr.even, table tr.alt, table tr:nth-of-type(even) {
 .mrgt15, .qtip-blue a#mylink_settings_template {
     margin-top: 0.9375rem !important;
 }
-.mrgr5 {
-    margin-right: 0.3125rem !important;
-}
-.mrgt10 {
-    margin-top: 0.625rem;
-}
+
 .font-mini, [id*="groupColl_new_"]:hover .icon-ellipsis-v, [id*="groupColl_"]:hover .icon-ellipsis-v {
     font-size: 0.625rem !important;
 }
@@ -1135,4 +1204,38 @@ a.input-text-delete {
 }
 .input-text-hide {
     position: absolute; left: -9999px;
+}
+.send-process {
+	padding-left: 0.625rem;
+}
+.send-process .icon {
+	color: #76be43;
+}
+.fa-spin-custom, .glyphicon-spin {
+    -webkit-animation: spin 1000ms infinite linear;
+    animation: spin 1000ms infinite linear;
+}
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
+}
+@keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
+}
+select:hover {
+    background-color: #f3f3f3;
+    border-color: #999;
 }

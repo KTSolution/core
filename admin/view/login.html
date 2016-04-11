@@ -24,20 +24,14 @@
     <link href="//fonts.googleapis.com/css?family=Open+Sans:400,400i,300,700" rel="stylesheet" type="text/css"/>
 
     <link href="javascript/library/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <?php foreach ($styles as $style) { ?><link href="<?php echo $style['href']; ?>" type="text/css" rel="<?php echo $style['rel']; ?>"
-          media="<?php echo $style['media']; ?>"/>
-    <?php } ?>
-
-    <?php foreach ($links as $link) { ?><link href="<?php echo $link['href']; ?>" rel="<?php echo $link['rel']; ?>"/>
-    <?php } ?>
 
     <link href="static/css/flag-icon.css" rel="stylesheet" type="text/css"/>
     <link href="static/css/reset.css" rel="stylesheet" type="text/css"/>
     <link href="static/css/style.css" rel="stylesheet" type="text/css"/>
-    <script src="javascript/jquery/jquery-2.1.1.min.js" type="text/javascript"></script>
-    <script src="javascript/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="javascript/library/jquery/jquery-2.1.1.min.js" type="text/javascript"></script>
+    <script src="javascript/library/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 </head>
-<body class="">
+<body class="html not-front not-logged-in no-sidebars page-welcome page-welcome-login">
 <div id="page-wrapper">
     <div id="page-login" class="container-fluid">
         <div class="row">
@@ -58,21 +52,21 @@
                 <section id="login" class="container">
                     <div class="row">
                         <div class="col-xs-12">
-                            <form autocomplete="off" action="#!/login" method="post" id="user-login" accept-charset="UTF-8">
+                            <form autocomplete="off" method="post" id="user-login" accept-charset="UTF-8">
                                 <div class="field">
                                     <div class="col-sm-3">
                                         <div class="row">
-                                            <input id="field-username"
+                                            <input id="login-name"
                                                    class="form-control"
                                                    type="text" required="required" maxlength="60"
-                                                   name="login-user" placeholder="Username" />
+                                                   name="login-name" placeholder="Username" autocomplete="off"/>
                                         </div>
                                     </div>
                                     <label for="right-label" class="inline error hide" id="login-name-message">
                                         Missing details    </label>
-                                    <label for="right-label" class="inline error  hide">
+                                    <label for="right-label" class="inline error hide">
                                         Wrong username    </label>
-                                    <label for="right-label" class="inline error  hide">
+                                    <label for="right-label" class="inline error hide">
                                         Your account is temporarily deactivated. Please contact us for more details.    </label>
                                 </div>
 
@@ -81,10 +75,10 @@
                                 <div class="field">
                                     <div class="col-sm-3">
                                         <div class="row">
-                                            <input id="field-pass"
+                                            <input id="login-pass"
                                                    class="form-control"
                                                    type="password" required="required" maxlength="128"
-                                                   name="login-pass" placeholder="Password" />
+                                                   name="login-pass" placeholder="Password" autocomplete="off"/>
                                         </div>
                                     </div>
                                     <label for="right-label" class="inline error hide" id="login-pass-message">
@@ -121,6 +115,7 @@
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
+                                <input type="hidden" name="redirect" id="redirect" value="" />
                             </form>
                         </div>
                     </div>
@@ -132,11 +127,11 @@
 
     </div>
 </div>
-<?php foreach ($scripts as $script) { ?>
-<script src="<?php echo $script; ?>" type="text/javascript"></script>
-<?php } ?>
-<script src="app/javascript/detectmobilebrowser.js" type="text/javascript"></script>
-<script src="app/javascript/common.js" type="text/javascript"></script>
+
+<!--<script src="javascript/app/detectmobilebrowser.js" type="text/javascript"></script>-->
+<!--<script src="javascript/app/common.js" type="text/javascript"></script>-->
+<script src="javascript/app/jquery.cookie.js" type="text/javascript"></script>
+<script src="javascript/app/login.js" type="text/javascript"></script>
 <div id="model-forgotten-details" class="modal fade" role="dialog">
     <div class="modal-dialog">
 

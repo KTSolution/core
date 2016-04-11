@@ -30,13 +30,8 @@ $session = new Session();
 $document = new Document();
 
 
-// Config
-
-$registry->set('config', $config);
-
-// Database
 $db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_PORT);
-$registry->set('db', $db);
+
 
 // Domain
 $config->set('config_url', HTTP_SERVER);
@@ -103,13 +98,12 @@ $langList = $mLanguage::where('enable', '=', '1')->get();
 
 foreach ($langList as $lang) {
     $languages[$lang['code']] = $lang;
-//    $select_lang[] = array($lang['code'],$lang['name']);
 }
-
-$language_code = isset($session->data['language']) ? $session->data['language'] : $config->get('config_language');
+//print_r($session->data);
+$language_code = isset($session->data['language']) ? $session->data['language'] : "vn";//$config->get('config_language');
 
 if (!isset($session->data['language']) || $session->data['language'] != $language_code) {
-    $session->data['language'] = $language_code;
+    $session->set('language', $language_code);
 }
 
 if (!isset($request->cookie['language']) || $request->cookie['language'] != $language_code) {
@@ -122,12 +116,12 @@ if ( empty($config->get('config_directory')) || ($config->get('config_directory'
 
 // Language
 $language = new Language($config->get('config_directory'));
-$language->set('current', $language_code);
+$language->current = $language_code;
+//$language->set('current', $language_code);
 
 // document
 $data['direction'] = $config->get('config_directory');
 $data['lang'] = $language_code;
-
 
 $registry->set('load', $loader);
 $registry->set('config', $config);
@@ -142,25 +136,8 @@ $registry->set('document', $document);
 $registry->set('language', $language);
 $registry->set('response', $response);
 
-if(1!=1){
-    $templatePath = "login.html";
-
-    $post['username'] = isset($request->post['login-user']) ? $request->post['login-user'] : "";
-    $post['password'] = isset($request->post['login-pass']) ? $request->post['login-pass'] : "";
-    $auth = $loader->model('Auth');
-    $user = $auth->getAccountInfo($post);
-    $language->load('website/login');
-    $data['title'] = $language->get('lang_site_title');
-    $data['LANG_SIGN_IN'] = $language->get('lang_sign_in_header');
-    $data['langList'] = render_html_element($select_lang, ELEMENT_TYPE_SELECT);
-    if( $user->perm == USER_ADMIN ) {
-        $request->cookie['usess'] = $user;
-        $templatePath = "master.html";
-    }
-
-} else {
-    //$user = $request->cookie['usess'];
-    $templatePath = "master.html";
+if (isset($_COOKIE['user_expired'])) {
+    $session->data['user_expired'] = ($_COOKIE['user_expired']);
 }
 
 if(!empty($route)){
@@ -169,6 +146,22 @@ if(!empty($route)){
     $response->setJsonOutput($data);
 
 } else {
+
+    $isLogged = $loader->controller("Login@isLogged");
+    if ( $isLogged ) {
+        $templatePath = "master.html";
+    } else {
+        $templatePath = "login.html";
+    }
+
+//    if( $isLogged ){
+//        setcookie('user_expired', null, 0, '/');
+//        $templatePath = "master.html";
+//    } else {
+//        setcookie('user_expired', true, 0, '/');
+//        $templatePath = "login.html";
+//    }
+
     $fonts = $loader->file('fonts');
     $setting = array(
         "name" => "ktsSetting",
@@ -177,22 +170,13 @@ if(!empty($route)){
             "ngKTSPath" => array(
                 "template" =>"/admin/view/",
                 "action" => "/admin/",
-                "base_url" => "http://demo.local/admin/"
+                "base_url" => "http://core.local/admin/"
             ),
             "tinyMCEFonts" => implode(";", $fonts['font'])
         )
     );
 
     $document->addScript($setting);
-//    $document->addScript("javascript/app/menu.js");
-//    $document->addScript("javascript/app/redirect.js");
-//    $document->addScript("javascript/app/app.js");
-//    $document->addScript("javascript/app/general.js");
-//    $document->addScript("javascript/app/directive.js");
-//    $document->addScript("javascript/app/dashboard.js");
-//    $document->addScript("javascript/app/website/setting.js");
-//    $document->addScript("javascript/app/website/language.js");
-//    $document->addScript("javascript/app/misc/member.js");
     $response->addHeader('Content-Type', 'text/html; charset=utf-8');
     //$response->setCompression($config->get('config_compression'));
     $response->setOutput($loader->view( $templatePath , $document->getData()));

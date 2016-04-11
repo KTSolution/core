@@ -99,7 +99,7 @@ class MemberController extends Controller
         $loader = $this->load;
 
         $pid = $request['pid'];
-        $modelMember =$loader->eloquent("Member");
+        $modelMember = $loader->eloquent("Member");
         if( $pid > 0) {
             $items = $modelMember::find($pid);
         } else {

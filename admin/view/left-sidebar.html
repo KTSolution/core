@@ -7,25 +7,13 @@
 
         <div class="clearfix">
             <select class="left" id="selected_language"
-                    change-language="sidebar.current_lang.code" ng-model="sidebar.current_lang.code"
-                    ng-options="obj.code as obj.name for obj in sidebar.lang_item">
-                <option ng-repeat value="{{obj.code}}">{obj.name}}</option>
+                    change-language="sidebar.lang_item.default"
+                    ng-model="sidebar.lang_item.default"
+                    ng-options="item.value for item in sidebar.lang_item.data track by item.key">
             </select>
-            <!--<select id="filter{{th}}"-->
-                    <!--ng-model="filter.columns[th].data"-->
-                    <!--ng-options="item.value for item in sidebar.lang_items track by item.key">-->
-            <!--</select>-->
         </div>
     </div>
-    <!--<nav class="left-nav">-->
-        <!--<ul class="side-nav">-->
-            <!--<li ng-repeat="(key, value) in sidebar.menu_items" ng-class="active" ng-model="value.key">-->
-                <!--<a href="/#!/{{value.link}}">-->
-                    <!--<span class="small-10 columns">{{value.title}}</span>-->
-                <!--</a>-->
-            <!--</li>-->
-        <!--</ul>-->
-    <!--</nav>-->
+
     <nav class="left-nav">
         <ul class="side-nav">
             <li ng-repeat="item in sidebar.menu_item" ng-class="{'active' : {{(item.active == 'true')}}}">

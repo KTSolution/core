@@ -6,17 +6,13 @@ class LoginController extends Controller {
     private $permission = array();
 
     public function isLogged() {
-
         if( isset($this->session->data['user_expired'])){
             $mUser = $this->model("User");
             $user = $mUser::where('enable', '=', 1)
                 ->where('id', '=', $this->session->data['user_expired'])
                 ->get();
             if( $user ) {
-//                $this->session->data['user_expired'] = $user->id;
-//                $this->user_id = $user->id;
-//                $this->username = $user->login_name;
-//                $_SESSION['user_expired'] = $user->login_name;
+                $this->session->data['user_expired'] = $user->login_name;
                 return true;
             } else {
                 $this->logout();
@@ -30,26 +26,24 @@ class LoginController extends Controller {
         $request = $this->request->request;
         $username = $request['login-name'];
         $password = $request['login-pass'];
-        $goto = $request['redirect'];
 
 		$mUser = $this->model("User");
         $user = $mUser::where('enable', '=', 1)
             ->where('login_name', '=', $username)
-            ->where('password', '=', md5($password))
+            ->where('password', '=', $password)
             ->first();
 
         if( $user ) {
-            setcookie('user_expired', $user->id, 0, '/');
-//            $this->session->data['user_expired'] = $user->id;
-//
-//            $this->user_id = $user->id;
-//            $this->username = $user->login_name;
+            $this->session->data['user_expired'] = $user->id;
+
+            $this->user_id = $user->id;
+            $this->username = $user->login_name;
             //$this->user_group_id = $user;
 
-//            return true;
+            return true;
+        } else {
+            return false;
         }
-
-        header('location:' . HTTP_SERVER . "admin/" . $goto);
 	}
 
     public function logout() {
