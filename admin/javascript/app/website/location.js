@@ -1,8 +1,8 @@
 "use strict";
 
-app.controller('WebsiteContactController',
+app.controller('WebsiteLocationController',
     function($scope, $rootScope, $route, apiService, $timeout, $location, $compile, $sce, $interval) {
-        console.log('contact controller');
+        console.log('location controller');
 
         $scope.fetched = false;
         $scope.saving = false;
@@ -11,11 +11,11 @@ app.controller('WebsiteContactController',
         $scope.start_edit = false;
 
         var link = {
-            list: '/website/website-contact',
-            edit: '/website/website-contact@edit',
-            save: '/website/website-contact@save',
-            save_map: '/website/website-contact@location_save_map',
-            delete: '/website/website-contact@delete'
+            list: '/website/website-location',
+            edit: '/website/website-location@edit',
+            save: '/website/website-location@save',
+            save_map: '/website/website-location@save_map',
+            delete: '/website/website-location@delete'
         };
 
         // init Tinymce
@@ -27,7 +27,6 @@ app.controller('WebsiteContactController',
                 $scope.sidebar = data.sidebar || {};
                 $scope.list = data.list || {};
                 $scope.global = data.global || {};
-                $scope.setup = data.setup || {};
                 $scope.setting = data.setting || {};
                 $scope.setting.file_manage ="";
             }
@@ -84,6 +83,7 @@ app.controller('WebsiteContactController',
                     $timeout(function(){
                         $scope.loaded = true;
                     }, 1000);
+                    $scope.initMap();
                 });
             }
         };

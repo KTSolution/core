@@ -6,7 +6,7 @@
  * Date: 3/13/2016
  * Time: 5:32 PM
  */
-class SettingController extends Controller
+class WebsiteSettingController extends Controller
 {
     public function index(){
         try{

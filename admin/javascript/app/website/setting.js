@@ -11,20 +11,23 @@ app.controller('WebsiteSettingController',
         $scope.start_edit = false;
 
         var link = {
-            list: '/website/setting',
-            edit: '/website/setting@edit',
-            save: '/website/setting@save',
-            delete: '/website/setting@delete'
+            list: '/website/website-setting',
+            edit: '/website/website-setting@edit',
+            save: '/website/website-setting@save',
+            delete: '/website/website-setting@delete',
+            upload: '/website/website-setting@upload'
         };
         
         // init Tinymce
         $scope.tiny_options = $tinymceOptions.tiny;
+        $scope.upload_options = $uploadOptions.default;
 
         $scope.init = function (data) {
             $scope.link     = link;
             if ( typeof data != isInvalid ) {
                 $scope.sidebar = data.sidebar || {};
                 $scope.list = data.list || {};
+                $scope.setting = data.setting || {};
             }
         };
 
@@ -125,6 +128,13 @@ app.controller('WebsiteSettingController',
             $scope.fetched = false;
             $scope.searching = true;
             $scope.fetchPage();
+        };
+
+        $scope.fileUploadChange = function() {
+            $scope.setting.image_items.logo = jQuery('#uxLogoText').val();
+            $scope.setting.image_items.mobile_logo = jQuery('#uxLogoMobileText').val();
+
+            $scope.$apply();
         };
 
         // Sort on header

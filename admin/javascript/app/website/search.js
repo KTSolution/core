@@ -1,8 +1,8 @@
 "use strict";
 
-app.controller('WebsiteContactController',
+app.controller('WebsiteSearchController',
     function($scope, $rootScope, $route, apiService, $timeout, $location, $compile, $sce, $interval) {
-        console.log('contact controller');
+        console.log('search controller');
 
         $scope.fetched = false;
         $scope.saving = false;
@@ -11,11 +11,11 @@ app.controller('WebsiteContactController',
         $scope.start_edit = false;
 
         var link = {
-            list: '/website/website-contact',
-            edit: '/website/website-contact@edit',
-            save: '/website/website-contact@save',
-            save_map: '/website/website-contact@location_save_map',
-            delete: '/website/website-contact@delete'
+            list: '/website/website-search',
+            edit: '/website/website-search@edit',
+            save: '/website/website-search@save',
+            save_map: '/website/website-search@location_save_map',
+            delete: '/website/website-search@delete'
         };
 
         // init Tinymce

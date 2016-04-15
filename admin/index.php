@@ -1,4 +1,5 @@
 <?php
+ini_set('display_errors', 1);
 // Version
 define('VERSION', '0.1');
 //define('DIR_SYSTEM', str_replace('\'', '/', realpath(dirname(__FILE__) . '/')) . 'system/');
@@ -41,10 +42,11 @@ $config->set('config_ssl', HTTPS_SERVER);
 $mSetting = $loader->eloquent('Setting');
 $settings = $mSetting::all();
 foreach ($settings as $result) {
-    if (!$result['serialized']) {
-        $config->set($result['key'], $result['value']);
+    if ($result['serialized']) {
+        //$config->set($result['key'], json_decode($result['value'], true));
+        $config->set($result['key'], (array)unserialize($result['value']));
     } else {
-        $config->set($result['key'], json_decode($result['value'], true));
+        $config->set($result['key'], $result['value']);
     }
 }
 // Log
@@ -167,6 +169,7 @@ if(!empty($route)){
         "name" => "ktsSetting",
         "type" => "inline",
         "data" => array(
+            "website_name" => SITE_NAME,
             "ngKTSPath" => array(
                 "template" =>"/admin/view/",
                 "action" => "/admin/",

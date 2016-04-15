@@ -6,7 +6,7 @@
  * Date: 3/13/2016
  * Time: 5:32 PM
  */
-class WebsiteContactController extends Controller
+class WebsiteLocationController extends Controller
 {
 
     public function index(){
@@ -18,20 +18,6 @@ class WebsiteContactController extends Controller
             $user = new stdClass(); $user->type = 1;
             $global = __global($user->type);
 
-            $mSetup = $this->model("Page");
-            $page_info = $mSetup::where('enable','=',1)
-                ->where('id', '=', PAGE_CONTACT)
-                ->where('type', '=', PAGE_TYPE_INTERNAL)
-                ->first();
-
-            $setup = new stdClass();
-            if($page_info){
-                $setup->wsTitle             = $language->get_text($page_info->name, $language->current);
-                $setup->wsUrl               = $language->get_text($page_info->code, $language->current);
-                $setup->wsMetaTitle         = $language->get_text($page_info->title, $language->current);
-                $setup->wsMetaDescription   = $language->get_text($page_info->description, $language->current);
-                $setup->wsMetaKeyword       = $language->get_text($page_info->keyword, $language->current);
-            }
 
             $sidebar = $this->load->json("common/SideBar");
 
@@ -110,7 +96,6 @@ class WebsiteContactController extends Controller
             $data['global']             = $global;
             $data['sidebar']            = $sidebar;
             $data['paging']             = $paging;
-            $data['setup']              = $setup;
             $data['setting']            = $setting;
 
             return $data;
@@ -121,26 +106,6 @@ class WebsiteContactController extends Controller
     }
 
     public function save() {
-        $post = $this->request->post['setup'];
-        $language = $this->language;
-
-        $fields = array('code', 'name', 'title', 'description', 'keyword');
-        $values = array('wsUrl', 'wsTitle', 'wsMetaTitle', 'wsMetaDescription', 'wsMetaKeyword');
-        $json = array('code', 'name', 'title', 'description', 'keyword');
-
-        $merge = array_combine($fields, $values);
-        $data = array();
-        foreach ($merge as $k => $v) {
-            $data[$k] = $post[$v];
-        }
-
-        $model = $this->model("Page");
-        $model::_save($data, PAGE_CONTACT, $json, $language);
-        
-        return $this->index();
-    }
-
-    public function location_save_map(){
         $post = $this->request->post;
         $language = $this->language;
 
@@ -183,8 +148,52 @@ class WebsiteContactController extends Controller
 
         $mSetting = $this->model("Setting");
         $mSetting::_save_map_info($input);
+        
+        return $this->index();
+    }
 
-        $map_info2 = $mSetting::where('key', '=', 'google_map')->first();
-        return $map_info2;
+    public function save_map(){
+        $post = $this->request->post;
+        $language = $this->language;
+
+        $markerList    = isset($post['MarkListSave']) ? $post['MarkListSave'] : '';
+        $markerList    = str_replace('&quot;', '"', $markerList);
+
+        $markerList    = json_decode(($markerList));
+
+        $map_info = new stdClass();
+        if ( count($markerList) ) {
+            $marker = array_shift($markerList);
+            /* Update lat,lng for hotel default marker */
+            if ( $marker->mIndex == 0 ) {
+                $map_info->map_lat     = (float) $marker->mLat;
+                $map_info->map_lng     = (float) $marker->mLng;
+                $map_info->marker_type = $marker->mType;
+                $map_info->map_zoom    = empty($post['map_zoom_save']) ? 16 : (float) $post['map_zoom_save'];
+                $map_info->hotel_name  = $language->set_text($marker->mTitleOrg, $marker->mTitle, $language->current);
+                $map_info->map_layout  = isset($post['map_layout']) ? $post['map_layout'] : MAP_GOOGLE_LAYOUT_MAP;
+            }
+            /* Update data for other markers */
+            $hotelMarkerList = array();
+            if ( count($markerList) ) {
+                foreach ($markerList as $marker) {
+                    if (!is_null($marker) && ($marker->mIndex != 0) && ($marker->mIndex != -1)) {
+                        $hotel_marker =  new stdClass();
+                        $hotel_marker->mTitle = $language->set_text($marker->mTitleOrg, $marker->mTitle, $language->current);
+                        $hotel_marker->mLat   = $marker->mLat;
+                        $hotel_marker->mLng   = $marker->mLng;
+                        $hotel_marker->mType  = $marker->mType;
+
+                        $hotelMarkerList[]    = $hotel_marker;
+                    }
+                }
+                $map_info->marker = $hotelMarkerList;
+            }
+        }
+
+        $input = serialize($map_info);
+
+        $mSetting = $this->model("Setting");
+        $mSetting::_save_map_info($input);
     }
 }

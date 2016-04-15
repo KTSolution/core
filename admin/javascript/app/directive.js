@@ -431,7 +431,7 @@ app.directive('fileupload', ['$timeout', function($timeout) {
                         var fileInput = jQuery('#uxLogo');
                         if (fileInput.get(0).files.length) {
                             if (validator_size < this.files[0].size) {
-                                //console.log('File size:' + this.files[0].size);
+                                console.log('File size:' + this.files[0].size);
                                 jQuery("#uxLogoFileSize").show();
                                 $text.val(filename) // Set the value
                                     .attr('title', filename) // Show filename in title tootlip
@@ -493,42 +493,31 @@ app.directive('fileupload', ['$timeout', function($timeout) {
                                         $text.addClass('processing');
                                         $button.removeClass('alert-border');
                                         $message.text($message.attr('data-loading')).show();
-                                        jQuery('#accm-submit-button-upload').show();
-                                        jQuery('#accm-submit-button').hide();
                                     },
                                     success: function (data) {
                                         $text.removeClass('processing');
-                                        jQuery('#accm-submit-button-upload').hide();
-                                        jQuery('#accm-submit-button').show();
                                         //scope.file...
                                         jQuery('#show-icon-download').show();
                                         $message.text('').hide();
                                         if (!data.status) {
                                             $error_message.text(data.error).show();
-                                            //$text.val('');
                                             element.val('');
                                             $delete.show();
                                             $text.addClass('alert-border invalid-image');
                                             $button.addClass('alert-border');
-                                            jQuery('#accm-submit-button-upload').show();
-                                            jQuery('#accm-submit-button').hide();
                                         }
                                         else {
-                                            //$error_message.text($error_message.attr('data-empty')).show();
                                             $text.val(data.name);
                                             element.val('');
                                             $delete.show();
-                                            jQuery('#accm-submit-button-upload').hide();
-                                            jQuery('#accm-submit-button').show();
                                         }
 
                                         if (scope.fileUploadChange) {
-                                            scope.fileUploadChange();
+                                            //scope.fileUploadChange();
                                         }
                                     },
                                     error: function (jqXHR, textStatus, errorThrown) {
                                         $message.text($message.attr('data-error')).show();
-
                                     }
                                 });
                             });
@@ -536,7 +525,7 @@ app.directive('fileupload', ['$timeout', function($timeout) {
                     } //-----end auto upload
                     else {
                         if (scope.fileUploadChange) {
-                            scope.fileUploadChange();
+                            //scope.fileUploadChange();
                         }
                     }
 

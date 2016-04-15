@@ -50,6 +50,7 @@ function __render( value1, value2 ) {
 var $uploadOptions = {};
 $uploadOptions.default = {
     auto_upload: true,
+    validate_size: null,
     upload_path: ktsSetting.ngKTSPath.action + 'file@upload',
     delete_path: ktsSetting.ngKTSPath.action + 'file@delete',
     form_build_id: '',
@@ -159,32 +160,44 @@ controllers.push({
 controllers.push({
     name: 'WebsiteSettingController',
     template: 'website/setting.html',
-    url: '/website/setting',
+    url: '/website/website-setting',
     title: 'Website Development'
 });
 controllers.push({
     name: 'WebsiteHomeController',
     template: 'website/setup.html',
     url: '/website/website-home',
-    title: 'Website Development'
+    title: 'Home Page Setting'
+});
+controllers.push({
+    name: 'WebsiteSearchController',
+    template: 'website/setup.html',
+    url: '/website/website-search',
+    title: 'Search Page'
 });
 controllers.push({
     name: 'WebsiteAboutController',
     template: 'website/setup.html',
     url: '/website/website-about',
-    title: 'Website Development'
+    title: 'About Us Page Setting'
 });
 controllers.push({
     name: 'WebsiteLanguageController',
     template: 'website/language.html',
     url: '/website/website-language',
-    title: 'Website Development'
+    title: 'Language Setting'
 });
 controllers.push({
     name: 'WebsiteContactController',
     template: 'website/setup.html',
     url: '/website/website-contact',
-    title: 'Website Development'
+    title: 'Contact Page Setting'
+});
+controllers.push({
+    name: 'WebsiteLocationController',
+    template: 'website/location.html',
+    url: '/website/website-location',
+    title: 'Location Setting'
 });
 controllers.push({
     name: 'MemberController',
@@ -246,9 +259,9 @@ app.run(function ($rootScope, $location) {
 
     $rootScope.$on('$viewContentLoaded', function ($scope) {
         if ($rootScope.pageTitle != '')
-            $rootScope.pageTitle = $rootScope.pageTitle + ' | Hotel Link Solutions';
+            $rootScope.pageTitle = $rootScope.pageTitle + ' | ' + ktsSetting.website_name;
         else {
-            $rootScope.pageTitle = jQuery("#meta-title").val() + ' | Hotel Link Solutions';
+            $rootScope.pageTitle = jQuery("#meta-title").val() + ' | ' + ktsSetting.website_name;
         }
 
         var cpath = $location.path();
@@ -382,7 +395,7 @@ app.factory('apiService', function($http, $resource, $q) {
         },
         save_map: function(url, data, zoom) {
             var path = ktsPath.action + url;
-            var query = 'MarkListSave=' + data + '&map_zoom_save=' + zoom;
+            var query = "MarkListSave=" + data + "&map_zoom_save=" + zoom;
             var promise= $http.post( path, query, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
             ).then(function (response) {
                 return response.data;});
@@ -396,6 +409,17 @@ app.factory('apiService', function($http, $resource, $q) {
                     return response.data;
                 });
             return promise;
+        },
+        upload_options:  function (auto, upload_path, delete_path) {
+            var options = {};
+            options.auto_upload = auto || true;
+            options.upload_path = upload_path;
+            options.delete_path = delete_path;
+            options.form_build_id = "";
+            options.form_token = "";
+            options.form_id = "";
+            
+            return options;
         }
     }
 });

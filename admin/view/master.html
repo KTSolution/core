@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
     <!--<base href="http://core.local/">-->
-    <title ng-bind="title"></title>
+    <title ng-bind="$root.pageTitle"></title>
 
 
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
@@ -96,7 +96,7 @@
                     <div class="sub-row website-subnav hide">
                         <ul class="inline-list">
                             <li class="sub-menu-setting">
-                                <a ng-reload-page="" href="#!/website/setting" target="">Website Development</a>
+                                <a ng-reload-page="" href="#!/website/website-setting" target="">Website Development</a>
                             </li>
                             <li class="sub-menu-language">
                                 <a ng-reload-page="" href="#!/website/language" target="">Languages</a>
@@ -148,8 +148,10 @@
 <script src="javascript/app/website/setting.js"></script>
 <script src="javascript/app/website/language.js"></script>
 <script src="javascript/app/website/home.js"></script>
+<script src="javascript/app/website/search.js"></script>
 <script src="javascript/app/website/about.js"></script>
 <script src="javascript/app/website/contact.js"></script>
+<script src="javascript/app/website/location.js"></script>
 
 <script src="javascript/app/misc/member.js"></script>
 </body>

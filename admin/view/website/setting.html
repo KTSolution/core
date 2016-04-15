@@ -21,7 +21,7 @@
                             <label>Logo</label>
                             <div class="col-xs-8">
                                 <div class="row">
-                                    <input type="file" id="uxLogo" fileupload="fileupload_options">
+                                    <input type="file" id="uxLogo" fileupload="upload_options" data-type="logo">
                                     <input type="text" id="uxLogoText">
                                     <a href="#!" id="uxLogoDelete" class="input-text-delete" title="Delete">X</a>
                                 </div>
@@ -32,6 +32,15 @@
                                     <a href="#!" class="button postfix error-nobdrl" id="uxLogoButton" ng-class=""> Choose File </a>
                                 </div>
                             </div>
+                            <label for="uxLogoText" id="uxLogoErrorMessage" style="display: none;"
+                                   class="error"></label>
+
+                            <label id="uxLogoMessage" style="display: none;"
+                                   class="upload-status"
+                                   data-loading="Uploading..."
+                                   data-deleting="Deleting..."
+                                   data-error="Upload error">
+                            </label>
                         </div>
                     </div>
                     <div class="col-xs-7">
@@ -66,6 +75,83 @@
                                 <div class="row">
                                     <!--<a href="#!" class="button postfix error-nobdrl" id="uxLogoButton" ng-class="{'alert-border': ngErrorRequired('hotel_inf[image_items][logo]')}" tabindex="-1"> Choose File </a>-->
                                     <a href="#!" class="button postfix error-nobdrl" id="uxFaviconButton" ng-class="" tabindex="-1"> Choose File </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <label>Facebook page <small>(optional)</small></label>
+                            <div class="col-xs-12">
+                                <div class="row">
+                                    <input type="text" class="form-control" id="Facebook" placeholder="http://"
+                                           ng-model="config.Facebook" name="config[Facebook]">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <label>Google+ <small>(optional)</small></label>
+                            <div class="col-xs-12">
+                                <div class="row">
+                                    <input type="text" class="form-control" id="Google" placeholder="http://"
+                                           ng-model="config.Google" name="config[Google]">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <label>Instagram <small>(optional)</small></label>
+                            <div class="col-xs-12">
+                                <div class="row">
+                                    <input type="text" class="form-control" id="Instagram" placeholder="http://"
+                                           ng-model="config.Instagram" name="config[Instagram]">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <label>Twitter <small>(optional)</small></label>
+                            <div class="col-xs-12">
+                                <div class="row">
+                                    <input type="text" class="form-control" id="Twitter" placeholder="http://"
+                                           ng-model="config.Twitter" name="config[Twitter]">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <label>YouTube <small>(optional)</small></label>
+                            <div class="col-xs-12">
+                                <div class="row">
+                                    <input type="text" class="form-control" id="YouTube" placeholder="http://"
+                                           ng-model="config.YouTube" name="config[YouTube]">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <label>Skype Username <small>(optional)</small></label>
+                            <div class="col-xs-12">
+                                <div class="row">
+                                    <input type="text" class="form-control" id="Skype"
+                                           ng-model="config.Skype" name="config[Skype]">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <label>Yahoo ID <small>(optional)</small></label>
+                            <div class="col-xs-12">
+                                <div class="row">
+                                    <input type="text" class="form-control" id="Yahoo"
+                                           ng-model="config.Yahoo" name="config[Yahoo]">
                                 </div>
                             </div>
                         </div>

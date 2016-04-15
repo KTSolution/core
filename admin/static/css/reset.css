@@ -723,6 +723,8 @@ label {
 label.error, .upload-status {
 	margin-bottom: 0.625rem;
 	font-size: 0.6875rem;
+	width: 100%;
+	float: left;
 }
 label.error {
 	color: red;
